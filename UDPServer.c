@@ -41,7 +41,7 @@ int main(int argc, char* argv[]){
     while(1){
 
         //receive message from client
-        char input[128];
+        char input[200];
         int bytes_received = recvfrom(sock, input, sizeof(input), 0, (struct sockaddr *)&client_addr, &client_len);
         if(bytes_received <= 0){
             perror("RECEIVE MESSAGE ERROR\n");
@@ -72,7 +72,7 @@ int main(int argc, char* argv[]){
             }
         
             //ANSWER
-            memset(input,0,128);
+            memset(input,0,200);
             sprintf(input,"%d",sum);  //convert number to char*
             sendto(sock, input, strlen(input), 0, (struct sockaddr *)&client_addr, client_len); 
         }while(sum >= 10);

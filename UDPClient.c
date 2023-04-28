@@ -40,8 +40,8 @@ int main(int argc, char* argv[]){
     addr.sin_port = htons(port);
 
     //Initialize and get input from user
-    char input[128];
-    memset(input,0,128);
+    char input[200];
+    memset(input,0,200);
 
     printf("Enter string: ");
     scanf("%s", input);
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
     sendto(sock, input, strlen(input), 0, (struct sockaddr *)&addr, sizeof(addr));    
     
 
-    char message[128];  
+    char message[200];  
     int num;  //num is used as a test to see if server is done sending messages
     do{
         //receive message
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
         //convert message to number and loop only if its a single digit
         num = atoi(message);
         //clear message
-        memset(message,0,128);
+        memset(message,0,200);
     }while(num >= 10);
 
     close(sock);
