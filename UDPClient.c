@@ -18,7 +18,16 @@ int is_digits(const char buffer[]){
 
 
 
-int main(){
+int main(int argc, char* argv[]){
+    if(argc != 3){
+        printf("INVALID NUMBER OF ARGUMENTS, 3 EXPECTED\n");
+        return 1;
+    }
+    const char* ip = argv[1];
+    int port = atoi(argv[2]);
+
+
+
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
         printf("ERROR CREATING INITIAL SOCK\n");
@@ -27,11 +36,10 @@ int main(){
     }
 
 
-    int port = 8000;
 
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    addr.sin_addr.s_addr = inet_addr(ip);
     addr.sin_port = htons(port);
 
 

@@ -1,11 +1,17 @@
 #include <netinet/in.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
 
 
-int main(){
+int main(int argc, char* argv[]){
+    if(argc != 2){
+        printf("INVALID NUMBER OF ARGUMENTS, 2 EXPECTED\n");
+        return 1;
+    }
+    int port = atoi(argv[1]);
 
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
@@ -13,7 +19,6 @@ int main(){
         return 1;
     }
 
-    int port = 8000;
 
     struct sockaddr_in addr = {0};
     addr.sin_family = AF_INET;
