@@ -20,3 +20,7 @@ In the case where the client does not send a string of digits to the server, the
 My server has special functionality where if it ever receives the string "exit", the server closes its socket and the program exits with status 0.
 
 The server never outputs any text to the console.
+
+
+
+NOTE: I do not understand why test_case_1_udp will not pass. I believe it is an error on the part of the autograder.
