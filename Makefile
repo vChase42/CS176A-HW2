@@ -39,16 +39,16 @@ all: server_c_udp client_c_udp server_c_tcp client_c_tcp
 # Replace <"your_program"> with the name of your specififc program. 
 # For example, the next line may look something like this: 'server_c_udp: server_c_udp.c' without quotes.
 server_c_udp: UDPServer.c
-	$(CC) $(ARGS) -o server_c_udp UDPServer.c -lssl
+	$(CC) $(ARGS) -o server_c_udp UDPServer.c
 
 client_c_udp: UDPClient.c
-	$(CC) $(ARGS) -o client_c_udp UDPClient.c -lssl
+	$(CC) $(ARGS) -o client_c_udp UDPClient.c
 
 server_c_tcp: TCPServer.c
-	$(CC) $(ARGS) -o server_c_tcp TCPServer.c -lssl
+	$(CC) $(ARGS) -o server_c_tcp TCPServer.c
 
 client_c_tcp: TCPClient.c
-	$(CC) $(ARGS) -o client_c_tcp TCPClient.c -lssl
+	$(CC) $(ARGS) -o client_c_tcp TCPClient.c
 
 clean:
 	rm -f *.o server_c_udp *~
