@@ -53,7 +53,7 @@ int main(int argc, char* argv[]){
     printf("Enter string: ");
     scanf("%s", input);
     // printf("%s\n",input);
-
+    sleep(1);
     sendto(sock, input, strlen(input), 0, (struct sockaddr *)&addr, sizeof(addr));    
     
     char req[128];
