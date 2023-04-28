@@ -1,5 +1,5 @@
 #include <netinet/in.h>
-#include <openssl/ssl.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
@@ -7,9 +7,6 @@
 
 int main(){
 
-    SSL_library_init();
-
-    SSL_CTX* ctx = SSL_CTX_new(SSLv23_server_method());
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
         printf("ERROR CREATING SERVER SOCKET\n");
@@ -73,7 +70,7 @@ int main(){
 
 
     close(sock);
-    SSL_CTX_free(ctx);
+
 
     // printf("END, SOCKETS CLOSED\n");
 

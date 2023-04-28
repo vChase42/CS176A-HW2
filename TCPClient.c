@@ -1,5 +1,6 @@
 #include <netinet/in.h>
-#include <openssl/ssl.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -18,9 +19,6 @@ int is_digits(const char buffer[]){
 
 
 int main(){
-    SSL_library_init();
-    SSL_CTX* ctx = SSL_CTX_new(SSLv23_server_method());
-
     int sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock == -1) {
         printf("ERROR CREATING INITIAL SOCK\n");
@@ -75,7 +73,7 @@ int main(){
     }while(num >= 10);
 
     close(sock);
-    SSL_CTX_free(ctx);
+
 
     return 0;
 }
