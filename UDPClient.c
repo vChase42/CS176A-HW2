@@ -26,8 +26,6 @@ int main(int argc, char* argv[]){
     const char* ip = argv[1];
     int port = atoi(argv[2]);
 
-    printf("%s, %d\n", ip, port);
-
     //Create a socket
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
@@ -48,35 +46,35 @@ int main(int argc, char* argv[]){
     printf("Enter string: ");
     scanf("%s", input);
 
-    sleep(1);
+    //send message to server
     sendto(sock, input, strlen(input), 0, (struct sockaddr *)&addr, sizeof(addr));    
     
-    char req[128];
 
-    int num;
+    char message[128];  
+    int num;  //num is used as a test to see if server is done sending messages
     do{
+        //receive message
         socklen_t s_addr = sizeof(addr);
-        int bytes_received = recvfrom(sock, req, sizeof(req), 0, (struct sockaddr *)&addr, &s_addr);
+        int bytes_received = recvfrom(sock, message, sizeof(message), 0, (struct sockaddr *)&addr, &s_addr);
         if(bytes_received <= 0){
             perror("RECEIVE MESSAGE ERROR\n");
             return 1;
         }else{
-            req[bytes_received] = '\0';
+            message[bytes_received] = '\0';   //make sure that the message is null terminated
         }
-        printf("From server: %s\n",req);
-        //ANSWER
-        
-        if(!is_digits(req)){
+        printf("From server: %s\n",message);
+        //check if message is an error message or a number
+        if(!is_digits(message)){
             break;
         }
 
-    
-        num = atoi(req);
-        memset(req,0,128);
+        //convert message to number and loop only if its a single digit
+        num = atoi(message);
+        //clear message
+        memset(message,0,128);
     }while(num >= 10);
 
     close(sock);
-
 
     return 0;
 }
