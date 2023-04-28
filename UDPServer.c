@@ -36,16 +36,21 @@ int main(int argc, char* argv[]){
 
     //client addr, we only serve 1 client at a time.
     struct sockaddr_in client_addr = {0};
-    socklen_t client_len;
+    socklen_t client_len = sizeof(client_addr);
+
 
     while(1){
 
         //receive message from client
         char input[200];
+        memset(input,0,200);
         int bytes_received = recvfrom(sock, input, sizeof(input), 0, (struct sockaddr *)&client_addr, &client_len);
-        if(bytes_received <= 0){
+
+        if(bytes_received < 0){
             perror("RECEIVE MESSAGE ERROR\n");
             return 1;
+        }else if(bytes_received == 0){
+            input[0] = 0;
         }
 
         //Exit Redundancy
@@ -64,7 +69,10 @@ int main(int argc, char* argv[]){
                 if(n < 0 || n > 9){ //if input[i] is a letter, return error message.
                     sum = 0;
                     char reply[] = "Sorry, cannot compute!";
-                    sendto(sock, reply, strlen(reply), 0, (struct sockaddr *)&client_addr, client_len); 
+                    int err = sendto(sock, reply, strlen(reply), 0, (struct sockaddr *)&client_addr, client_len);
+                    if(err <= 0){
+                        perror("MESSAGE SEND ERROR");
+                    }
                     break;    
                 }
                 sum += n;
