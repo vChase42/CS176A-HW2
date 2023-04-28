@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
+//This function checks if a char string consts of ONLY digits
 int is_digits(const char buffer[]){
     for(int i = 0; buffer[i] != '\0'; i++){
         if(!isdigit(buffer[i])){
@@ -19,40 +19,35 @@ int is_digits(const char buffer[]){
 
 
 int main(int argc, char* argv[]){
-    if(argc != 3){
+    if(argc != 3){  //test for correct number of arguments
         printf("INVALID NUMBER OF ARGUMENTS, 3 EXPECTED\n");
         return 1;
     }
     const char* ip = argv[1];
     int port = atoi(argv[2]);
 
+    printf("%s, %d\n", ip, port);
 
-
+    //Create a socket
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == -1) {
         printf("ERROR CREATING INITIAL SOCK\n");
         return 1;
-        // Handle error
     }
 
-
-
+    //create address to send messages to
     struct sockaddr_in addr;
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr(ip);
     addr.sin_port = htons(port);
 
-
-
-
-
-
+    //Initialize and get input from user
     char input[128];
     memset(input,0,128);
 
     printf("Enter string: ");
     scanf("%s", input);
-    // printf("%s\n",input);
+
     sleep(1);
     sendto(sock, input, strlen(input), 0, (struct sockaddr *)&addr, sizeof(addr));    
     
